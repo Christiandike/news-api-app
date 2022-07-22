@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap");
 
 :root {
-  --red: rgb(231, 15, 15);
+  --red: #e70f0f;
 }
 
 * {
@@ -13,7 +13,7 @@
 html {
   font-size: 1rem;
   scroll-behavior: smooth;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 a:visited,
@@ -39,10 +39,10 @@ header {
   padding: 1rem 2rem;
   position: fixed;
   background-color: #fff;
-  box-shadow: 0 5px 50px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #d3d3d3;
 }
 
-header span {
+.menu-btn {
   cursor: pointer;
 }
 
@@ -51,6 +51,10 @@ header span {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+}
+
+.logo {
+  font-weight: 800;
 }
 
 .search-btn-wrapper {
@@ -67,6 +71,10 @@ header span {
   outline: transparent;
   font-size: inherit;
   margin: 0 auto;
+  padding-left: 2.5rem;
+  background: url(./media/search.svg) no-repeat left;
+  background-position: 7px 13px;
+  background-size: 24px;
 }
 
 .search-btn::placeholder {
@@ -107,11 +115,12 @@ header span {
   margin-right: 1rem;
   width: 50%;
   border: 1px solid black;
-  background-color: #fff;
+  background-color: #f0f0f0;
   z-index: 1;
   position: absolute;
-  right: 2.5%;
-  top: 12.5%
+  right: 1%;
+  top: 3.5rem;
+  transition: all 500ms ease-in-out;
 }
 
 .modal-menu a {
@@ -159,6 +168,7 @@ header span {
   border: 1px solid black;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  background: #fff;
 }
 
 .view-content {
@@ -173,28 +183,120 @@ header span {
   overflow: hidden;
 }
 
-
 .view-img-wrapper img {
   margin: 0 0 -50px 0;
-  width: 100%
+  width: 100%;
 }
 
 .view-desc {
   padding: 0.85rem 0;
   font-size: 0.85rem;
   text-align: justify;
+  line-height: 1rem;
 }
+
 .view-content .btn-wrap {
   margin-top: 0;
 }
 
 .view-content .page-btn {
-  font-size: .85rem;
+  font-size: 0.85rem;
 }
 
 .view-content h4 {
   font-weight: 800;
   cursor: pointer;
+  line-height: 1.25rem;
+}
+
+.results-view .btn-wrap span {
+  display: none;
+}
+
+.default-main .page-btn {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.default-main .page-btn span {
+  padding-left: 0.5rem;
+}
+
+.default-main .view-desc {
+  text-align: left;
+}
+
+.default-main .main-view-wrapper {
+  border-bottom-right-radius: 50px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.default-view {
+  margin-top: 2rem;
+}
+
+.def-main-1 .view-img-wrapper {
+  width: 100%;
+  height: 12rem;
+  background: transparent;
+  overflow: hidden;
+}
+
+.def-main-1 {
+  background: linear-gradient(180deg, #fff 30%, #e70f0ff5 10%);
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.def-main-2 {
+  background: linear-gradient(180deg, #e70f0ff5 20%, #fff 0);
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.def-main-3 {
+  background: linear-gradient(180deg, #fff 75%, #000 0);
+  border-bottom: none;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.def-main-4 {
+  background-color: #000;
+  border-top: none;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.def-main-4 .main-view-wrapper {
+  border: 1px solid var(--red);
+}
+
+.def-main-4 .view-content {
+  border-top: 1px solid var(--red);
+}
+
+.def-main-1 .view-img-wrapper img {
+  margin: 0 0 -50px 0;
+  width: 100%;
+}
+
+.default-view h1 {
+  line-height: 2rem;
+  text-align: center;
+  padding: 0;
+  font-size: 2rem;
+  margin: 0 1.5rem;
+}
+
+.red {
+  color: var(--red);
+}
+
+.default-view h4 {
+  font-size: 1.5rem;
 }
 
 .tags {
@@ -244,3 +346,43 @@ header span {
   box-shadow: none;
   background-color: #fff;
 }
+
+.err-img {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.err-img img {
+  width: 80%;
+}
+
+.bad-query-big {
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  margin: 2rem 1.5rem 1rem 1.5rem;
+  text-align: center;
+}
+
+.bad-query-small {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-align: center;
+  margin: 0 1.5rem;
+}
+
+.loading-wrap img {
+  width: 10%;
+}
+
+.loading-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1.25rem;
+  margin-bottom: -1.5rem;
+}
+
+/* media queries */

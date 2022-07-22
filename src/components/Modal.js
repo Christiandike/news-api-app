@@ -7,11 +7,11 @@ const Modal = ({ popup }) => {
 
   return (
     <div className="modal-menu">
-      <a href="https://www.google.com">How To Use</a>
-      <a href="https://www.google.com">About</a>
-      <a href="https://www.google.com">Support</a>
-      <a href="https://www.google.com">Contact</a>
-      <a href="https://www.google.com">Donate</a>
+      <a href="#id">How To Use</a>
+      <a href="#id">About</a>
+      <a href="#id">Support</a>
+      <a href="#id">Contact</a>
+      <a href="#id">Donate</a>
     </div>
   );
 };

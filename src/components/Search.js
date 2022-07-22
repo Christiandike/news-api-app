@@ -4,7 +4,7 @@ const Search = ({ value, onKeyDown }) => (
   <div className="search-btn-wrapper">
     <input
       className="search-btn"
-      placeholder="search for news"
+      placeholder="Search for news"
       value={value}
       onKeyDown={onKeyDown}
     />

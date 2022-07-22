@@ -4,10 +4,18 @@ import Modal from "./components/Modal";
 import Views from "./components/Views";
 import Search from "./components/Search";
 import Header from "./components/Header";
+import Loading from "./components/LoadingView";
 
 const App = () => {
   const [popup, setPopup] = useState(false);
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [statusMsg, setStatusMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageData, setPageData] = useState({
+    page: "",
+    totalPages: "",
+  });
   const [reqBody, setReqBody] = useState({
     method: "GET",
     url: "https://free-news.p.rapidapi.com/v1/search",
@@ -17,12 +25,6 @@ const App = () => {
       "X-RapidAPI-Host": "free-news.p.rapidapi.com",
     },
   });
-  const [results, setResults] = useState([]);
-  const [pageData, setPageData] = useState({
-    page: "",
-    totalPages: "",
-  });
-  const [statusMsg, setStatusMsg] = useState("");
 
   useEffect(() => {
     axios
@@ -34,7 +36,6 @@ const App = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setResults(res.data.articles);
         setPageData({
           page: res.data.page,
@@ -54,6 +55,7 @@ const App = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
+      setIsLoading(true);
       setQuery(e.target.value);
       console.log(e.target.value);
     }
@@ -84,7 +86,6 @@ const App = () => {
   };
 
   const handleOption = (e) => {
-    console.log(e.target.value);
     setReqBody({
       ...reqBody,
       params: {
@@ -94,11 +95,80 @@ const App = () => {
     });
   };
 
+  const handleSports = () => {
+    const sports = [
+      "premier league",
+      "sports",
+      "football",
+      "basketball",
+      "wwe",
+      "tennis",
+      "sports news",
+      "world cup",
+      "esports",
+    ];
+    const sportsQuery = sports[Math.floor(Math.random() * sports.length)];
+    console.log(sportsQuery);
+    setQuery(sportsQuery);
+  };
+
+  const handleBusiness = () => {
+    const business = [
+      "business news",
+      "stock market",
+      "inflation",
+      "economics",
+      "world trade",
+      "commerce",
+      "financial times",
+      "bloomberg news",
+      "global trade",
+      "central bank",
+      "the economy",
+      "cryptocurrency",
+      "stocks",
+      "finance",
+      "venture capital",
+      "VC",
+      "markets",
+    ];
+    const businessQuery = business[Math.floor(Math.random() * business.length)];
+    setQuery(businessQuery);
+  };
+
+  const handleMovies = () => {
+    const movies = [
+      "latest movies",
+      "box office",
+      "blockbuster",
+      "netflix",
+      "movies",
+    ];
+    const moviesQuery = movies[Math.floor(Math.random() * movies.length)];
+    setQuery(moviesQuery);
+  };
+
+  const handleUkraine = () => {
+    const ukraine = [
+      "ukraine war",
+      "russia ukraine",
+      "russia war",
+      "putin zelensky",
+      "kyiv",
+      "zelensky",
+      "russia ukraine war",
+      "zelensky ukraine",
+    ];
+    const ukraineQuery = ukraine[Math.floor(Math.random() * ukraine.length)];
+    setQuery(ukraineQuery);
+  };
+
   return (
     <div className="app-wrapper">
       <Header onClick={handlePopup} />
       <Modal popup={popup} />
       <Search onKeyDown={handleKeyDown} />
+      <Loading isLoading={isLoading} />
       <Views
         results={results}
         statusMsg={statusMsg}
@@ -106,6 +176,11 @@ const App = () => {
         handleNext={handleNext}
         handlePrevious={handlePrevious}
         onChange={handleOption}
+        handleBusiness={handleBusiness}
+        handleUkraine={handleUkraine}
+        handleMovies={handleMovies}
+        handleSports={handleSports}
+        setIsLoading={setIsLoading}
       />
     </div>
   );
