@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Modal from "./components/Modal";
-import Views from "./components/Views";
-import Search from "./components/Search";
-import Header from "./components/Header";
-import Loading from "./components/LoadingView";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
+import Views from './components/Views';
+import Home from './components/Home';
+import TopMenu from './components/TopMenu';
+import SideMenu from './components/SideMenu';
+import Search from './components/Search';
 
 const App = () => {
-  const [popup, setPopup] = useState(false);
-  const [query, setQuery] = useState("");
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [query, setQuery] = useState('');
+  const [statusMsg, setStatusMsg] = useState('');
   const [results, setResults] = useState([]);
-  const [statusMsg, setStatusMsg] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+
   const [pageData, setPageData] = useState({
-    page: "",
-    totalPages: "",
+    page: '',
+    totalPages: '',
   });
+
   const [reqBody, setReqBody] = useState({
-    method: "GET",
-    url: "https://free-news.p.rapidapi.com/v1/search",
-    params: { q: query, lang: "en", page: "1" },
+    method: 'GET',
+    url: 'https://free-news.p.rapidapi.com/v1/search',
+    params: { q: query, lang: 'en', page: '1' },
     headers: {
-      "X-RapidAPI-Key": process.env.REACT_APP_NEWS_API_KEY,
-      "X-RapidAPI-Host": "free-news.p.rapidapi.com",
+      'X-RapidAPI-Key': process.env.REACT_APP_NEWS_API_KEY,
+      'X-RapidAPI-Host': 'free-news.p.rapidapi.com',
     },
   });
 
@@ -48,144 +50,31 @@ const App = () => {
       });
   }, [reqBody, query]);
 
-  const handlePopup = () => {
-    setPopup(!popup);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      setIsLoading(true);
-      setQuery(e.target.value);
-      console.log(e.target.value);
-    }
-  };
-
-  const handleNext = () => {
-    setReqBody({
-      ...reqBody,
-      params: {
-        ...reqBody.params,
-        page: String(+reqBody.params.page + 1),
-      },
-    });
-  };
-
-  const handlePrevious = () => {
-    if (+reqBody.params.page === 1) {
-      return;
-    } else {
-      setReqBody({
-        ...reqBody,
-        params: {
-          ...reqBody.params,
-          page: String(+reqBody.params.page - 1),
-        },
-      });
-    }
-  };
-
-  const handleOption = (e) => {
-    setReqBody({
-      ...reqBody,
-      params: {
-        ...reqBody.params,
-        page: String(e.target.value),
-      },
-    });
-  };
-
-  const handleSports = () => {
-    const sports = [
-      "premier league",
-      "sports",
-      "football",
-      "basketball",
-      "wwe",
-      "tennis",
-      "sports news",
-      "world cup",
-      "esports",
-    ];
-    const sportsQuery = sports[Math.floor(Math.random() * sports.length)];
-    console.log(sportsQuery);
-    setQuery(sportsQuery);
-  };
-
-  const handleBusiness = () => {
-    const business = [
-      "business news",
-      "stock market",
-      "inflation",
-      "economics",
-      "world trade",
-      "commerce",
-      "financial times",
-      "bloomberg news",
-      "global trade",
-      "central bank",
-      "the economy",
-      "cryptocurrency",
-      "stocks",
-      "finance",
-      "venture capital",
-      "VC",
-      "markets",
-    ];
-    const businessQuery = business[Math.floor(Math.random() * business.length)];
-    setQuery(businessQuery);
-  };
-
-  const handleMovies = () => {
-    const movies = [
-      "latest movies",
-      "box office",
-      "blockbuster",
-      "netflix",
-      "movies",
-    ];
-    const moviesQuery = movies[Math.floor(Math.random() * movies.length)];
-    setQuery(moviesQuery);
-  };
-
-  const handleUkraine = () => {
-    const ukraine = [
-      "ukraine war",
-      "russia ukraine",
-      "russia war",
-      "putin zelensky",
-      "kyiv",
-      "zelensky",
-      "russia ukraine war",
-      "zelensky ukraine",
-    ];
-    const ukraineQuery = ukraine[Math.floor(Math.random() * ukraine.length)];
-    setQuery(ukraineQuery);
-  };
-
   return (
-    <div className="app-wrapper">
-      <Header onClick={handlePopup} />
-      <Modal popup={popup} />
-      <Search onKeyDown={handleKeyDown} />
-      <Loading isLoading={isLoading} />
-      <Views
-        results={results}
-        statusMsg={statusMsg}
-        pageData={pageData}
-        handleNext={handleNext}
-        handlePrevious={handlePrevious}
-        onChange={handleOption}
-        handleBusiness={handleBusiness}
-        handleUkraine={handleUkraine}
-        handleMovies={handleMovies}
-        handleSports={handleSports}
-        setIsLoading={setIsLoading}
-      />
-    </div>
+    <Router>
+      <div className='app-wrap'>
+        <TopMenu setToggleMenu={setToggleMenu} toggleMenu={toggleMenu} />
+        <SideMenu toggleMenu={toggleMenu} />
+        <Search setQuery={setQuery} />
+
+        <Routes>
+          <Route path='/' element={<Home setQuery={setQuery} />} />
+          <Route
+            path='/results'
+            element={
+              <Views
+                results={results}
+                statusMsg={statusMsg}
+                pageData={pageData}
+                reqBody={reqBody}
+                setReqBody={setReqBody}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 };
-
-//dummy comment
 
 export default App;
